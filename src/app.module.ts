@@ -17,7 +17,6 @@ import { AuthModule } from '@modules/auth/auth.module';
       load: [AppConfig, DatabaseConfig],
     }),
     TypeOrmModule.forRootAsync({
-      imports: [ConfigModule, UserModule, AuthModule],
       useFactory: (configService: ConfigService) => ({
         ...configService.get('database'),
       }),
@@ -26,6 +25,8 @@ import { AuthModule } from '@modules/auth/auth.module';
     AutomapperModule.forRoot({
       strategyInitializer: classes(),
     }),
+    UserModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
