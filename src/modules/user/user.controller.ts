@@ -24,8 +24,8 @@ export class UserController {
 
   //get all users
   @Get()
-  @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles(Role.ADMIN, Role.USER)
+  @UseGuards(JwtAuthGuard)
+  // @Roles(Role.ADMIN, Role.USER)
   @ApiTags('Protected')
   @ApiBearerAuth('token')
   async findAll(): Promise<UserVm[]> {

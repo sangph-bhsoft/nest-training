@@ -1,0 +1,41 @@
+name: Deploy to Netlify
+
+env:
+  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+  NEXT_PUBLIC_MY_NAME: ${{ vars.NEXT_PUBLIC_MY_NAME }}
+  DB_HOST: flora.db.elephantsql.com
+  DB_PORT: 5432
+  DB_NAME: efhoofem
+  DB_USER: efhoofem
+  DB_PASSWORD: Br8Qd2O4NlDvQ-8PJqPhV7zJCgrgHPwA
+  NODE_ENV: production
+  PORT: 8000
+  JWT_KEY: haleilyfrv
+  JWT_EXP_H: 3600s
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Build
+      run: npm run build
+
+    - name: Deploy to Netlify
+      uses: netlify/actions/cli@master
+      with:
+        args: deploy --prod
+      env:
+        NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
